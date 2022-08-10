@@ -49,24 +49,7 @@ public class UserController {
 	@PostMapping("/users/save")
 	public String saveUser(User user, RedirectAttributes redirectAttributes, 
 			@RequestParam("image") MultipartFile multipartFile) throws IOException {
-		//System.out.println(user);
-
-//		try {
-//			//service.save(user);
-//			//redirectAttributes.addFlashAttribute("message", "The user has been saved successfully.");
-//			System.out.println(user);
-//			System.out.println(multipartFile.getOriginalFilename());
-//			return "redirect:/users";
-//			
-//	    } catch ( Exception noFile ) {
-//	    	redirectAttributes.addFlashAttribute("message", "The email is taken by another one. Please be unique by email.");
-//	        return "redirect:/users/new";
-//	    }
 		
-	
-			//service.save(user);
-			redirectAttributes.addFlashAttribute("message", "The user has been saved successfully.");			 
-			
 			if(!multipartFile.isEmpty()) {
 				String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 				user.setPhotos(fileName);
@@ -74,10 +57,16 @@ public class UserController {
 				
 				String uploadDir = "user-photos/" + savedUser.getId();
 				
+				FileUploadUtil.cleanDir(uploadDir);
 				FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
-				return "redirect:/users";
+				
+			}else {
+				if(user.getPhotos().isEmpty()) user.setPhotos(null);
+				service.save(user);
 			}
-			return null;
+			
+			redirectAttributes.addFlashAttribute("message", "The user has been saved successfully.");
+			return "redirect:/users";
 			
 			
 	}
