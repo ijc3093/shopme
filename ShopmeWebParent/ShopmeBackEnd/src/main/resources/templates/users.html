@@ -11,6 +11,9 @@
 	<link rel="stylesheet" type="text/css" th:href="@{/style.css}" />
 	<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}" ></script>
 	<script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" ></script>
+	
+	
+	
 </head>
 <body>
 <div class="container-fluid">
@@ -116,24 +119,21 @@
 		</table>
 	</div>
 	
-
-	<div class="model fade text-center" id="confirmModal">
-		<div class="model-dialog">
-			<div class="model-content">
-				<div class="model-header">
-					<h4 class="model-title">Delete Confirmation</h4>
-					<button type="button" class="close" data-dismiss="model">&times;</button>
+	<div class="modal fade text-center" id="confirmModal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Delete Confirmation</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
 				
-				<div class="model-body">
+				<div class="modal-body">
 					<span id="confirmText"></span>
 				</div>
-				
-				<div class="model-footer">
+				<div class="modal-footer">
 					<a class="btn btn-success" id="yesButton" href="">Yes</a>
-					<button type="button" class="btn btn-danger" data-dismiss="model">NO</button>
+					<button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
 				</div>
-				
 			</div>
 		</div>
 	</div>
@@ -145,7 +145,7 @@
 </div>
 <script type="text/javascript">
 	$(document).ready(function(){
-		$(".link-delete").on("click", function(0){
+		$(".link-delete").on("click", function(e){
 			e.preventDefault();
 			link = $(this);
 			//alert($(this).attr("href"));

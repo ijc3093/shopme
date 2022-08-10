@@ -31,6 +31,7 @@ public class RoleRepositoryTests {
 	
 	@Test
 	public void testCreateFirstRoles() {
+		Role roleAdmin2 = new Role("Admin", "manage everythings");
 		Role roleSalesperson = new Role("Salesperson", "manage product price, customers, shipping, orders and sales report");
 		
 		Role roleEditor = new Role("Editor", "manage cateries, brands, products, articles and menus");
@@ -39,11 +40,13 @@ public class RoleRepositoryTests {
 		
 		Role roleAssistant = new Role("Assistant", "manage questions and reviews");
 		
+		Role savedRole = repo.save(roleAdmin2);
 		Role savedRole1 = repo.save(roleSalesperson);
 		Role savedRole2 = repo.save(roleEditor);
 		Role savedRole3 = repo.save(roleShipper);
 		Role savedRole4 = repo.save(roleAssistant);
 		
+		assertThat(savedRole.getId()).isGreaterThan(0);
 		assertThat(savedRole1.getId()).isGreaterThan(0);
 		assertThat(savedRole2.getId()).isGreaterThan(0);
 		assertThat(savedRole3.getId()).isGreaterThan(0);
