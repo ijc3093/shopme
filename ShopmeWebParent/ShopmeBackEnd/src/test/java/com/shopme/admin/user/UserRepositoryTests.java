@@ -2,18 +2,23 @@ package com.shopme.admin.user;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.awt.print.Pageable;
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.annotation.Rollback;
 
 import com.shopme.common.entity.Role;
 import com.shopme.common.entity.User;
 
-@DataJpaTest
+@DataJpaTest(showSql = false)
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @Rollback(false)
 public class UserRepositoryTests {
@@ -37,7 +42,7 @@ public class UserRepositoryTests {
 		User savedUser2 = repo.save(izz2);
 		
 		assertThat(savedUser1.getId()).isGreaterThan(0);
-		assertThat(savedUser1.getId()).isGreaterThan(0);
+		assertThat(savedUser2.getId()).isGreaterThan(0);
 		
 	}
 
@@ -118,17 +123,31 @@ public class UserRepositoryTests {
 		assertThat(counById).isNotNull().isGreaterThan(0);
 	}
 	
-	
+	 
+	//Disable
 	@Test
 	public void testDisableUser() {
 		Integer id = 66;
 		repo.updateEnabledStatus(id, false);
 	}
 	
-	
+	//Enabled
 	@Test
 	public void tesEnableUser() {
 		Integer id = 67;
 		repo.updateEnabledStatus(id, true);
+	}
+	
+	//Pagination
+	@Test 
+	public void testListFirstPage() {
+		int pageNumber = 0;
+		int pageSize = 4;
+		
+		PageRequest pageable = PageRequest.of(pageNumber, pageSize);
+		Page<User>page = repo.findAll(pageable);
+		List<User>listUsers = page.getContent();
+		listUsers.forEach(user -> System.out.println(user));
+		assertThat(listUsers.size()).isEqualTo(pageSize);
 	}
 }
