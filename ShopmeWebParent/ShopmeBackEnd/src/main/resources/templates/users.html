@@ -59,7 +59,7 @@
 				&nbsp;&nbsp;
 				<input type="submit" value="search" class="btn btn-primary" />
 				&nbsp;&nbsp;
-				<input type="button" value="clear" class="btn btn-secondary" />
+				<input type="button" value="clear" class="btn btn-secondary" onclick="clearFilter()"/>
 			</form>
 		</div>
 		
@@ -67,18 +67,15 @@
 			<table class="table table-bordered table-striped table-hover table-responsive-xl">
 				<thead class="thead-dark">
 					<tr>
-						<th>User ID</th>
-						<th>Photos</th>
-						<th>E-mail</th>
-						<th>
-							<a th:if="${sortField != 'firstName'}" class="text-white" th:href="@{'/users/page/' + ${currentPage} + '?sortField=firstName&sortDir=' + ${sortDir}}">First Name</a>
-							<a th:if="${sortField == 'firstName'}" class="text-white" th:href="@{'/users/page/' + ${currentPage} + '?sortField=firstName&sortDir=' + ${reverseSortDir}}">First Name</a>
-							<span th:if="${sortField == 'firstName'}" th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
-						</th>
 						
-						<th>Last Name</th>
+						<th th:replace="fragments :: column_link('id', 'User ID')"/>
+						
+						<th>Photos</th>
+						<th th:replace="fragments :: column_link('email', 'E-mail')"/>
+						<th th:replace="fragments :: column_link('firstName', 'First Name')"/>
+						<th th:replace="fragments :: column_link('lastName', 'Last Name')"/>
 						<th>Roles</th>
-						<th>Enabled</th>
+						<th th:replace="fragments :: column_link('enabled', 'Enabled')"/>
 						<th>Actions</th>
 					</tr>								
 				</thead>
@@ -176,6 +173,11 @@
 				$("#confirmModal").modal();
 			});
 		});
+		
+		//Clear filter
+		function clearFilter(){
+			window.location = "[[@{/users}]]";
+		}
 	</script>
 	
 	</body>

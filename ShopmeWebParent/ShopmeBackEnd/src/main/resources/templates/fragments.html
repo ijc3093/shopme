@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0">
+	
+		<title>Home - Shopme Admin</title>
+		
+	</head>
+	<body style="background-color: #c3b4b4;">
+		<th th:fragment="column_link(fieldName, columnLabel)">
+			<a class="text-white" 
+				th:href="@{'/users/page/' + ${currentPage} + '?sortField='+ ${fieldName} +'&sortDir=' + ${sortField != fieldName ? sortDir : reverseSortDir} + ${$keyword != null ? '&keyword=' + keyword : ''}}">
+				[[${columnLabel}]]
+			</a>
+			<span th:if="${sortField == fieldName}" 
+				th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
+		</th>
+		
+		<a th:fragment="column_link(pageNum, Label)" class="page-link" 
+				th:href="@{'/users/page/' + ${pageNum} + '?sortField='+ ${sortField} +'&sortDir=' + ${sortDir} + ${$keyword != null ? '&keyword=' + keyword : ''}}">
+				[[${Label}]]
+			</a>
+	</body>
+</html>
