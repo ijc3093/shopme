@@ -150,4 +150,18 @@ public class UserRepositoryTests {
 		listUsers.forEach(user -> System.out.println(user));
 		assertThat(listUsers.size()).isEqualTo(pageSize);
 	}
+	
+	//Search Users
+	@Test
+	public void testSearchUsers() {
+		String keyword = "iss1";
+		int pageNumber = 0;
+		int pageSize = 4;
+		
+		PageRequest pageable = PageRequest.of(pageNumber, pageSize);
+		Page<User>page = repo.findAll(keyword, pageable);
+		List<User>listUsers = page.getContent();
+		listUsers.forEach(user -> System.out.println(user));
+		assertThat(listUsers.size()).isGreaterThan(0);
+	}
 }
