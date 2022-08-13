@@ -20,6 +20,9 @@ import com.shopme.admin.FileUploadUtil;
 import com.shopme.common.entity.Role;
 import com.shopme.common.entity.User;
 
+
+import javax.servlet.http.HttpServletResponse;
+
 @Controller
 public class UserController {
 
@@ -106,10 +109,15 @@ public class UserController {
 			}
 			
 			redirectAttributes.addFlashAttribute("message", "The user has been saved successfully.");
-			String firstPartOfEmail = user.getEmail().split("@")[0];
-			return "redirect:/users/page/1?sortField=id&sortDir=asc&keyword=" + firstPartOfEmail; 
+			
+			return getRedirectURLtoAffectedUser(user); 
 			
 			
+	}
+
+	private String getRedirectURLtoAffectedUser(User user) {
+		String firstPartOfEmail = user.getEmail().split("@")[0];
+		return "redirect:/users/page/1?sortField=id&sortDir=asc&keyword=" + firstPartOfEmail;
 	}
 	
 	//Edit
@@ -154,5 +162,12 @@ public class UserController {
 		String message = "The user ID " + id + " has been " + status;
 		redirectAttributes.addFlashAttribute("message", message);
 		return "redirect:/users";
+	}
+	
+	@GetMapping("/users/export/csv")
+	public void exportToCSV(HttpServletResponse response) throws IOException{
+		List<User>listUsers = service.listAll();
+		UserCsvExporter exporter = new UserCsvExporter();
+		exporter.export(listUsers, response);
 	}
 }
