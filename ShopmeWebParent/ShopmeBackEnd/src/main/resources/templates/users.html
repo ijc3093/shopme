@@ -46,6 +46,8 @@
 			<a th:href="@{/users/new}">Create New User</a>
 			&nbsp; |&nbsp;
 			<a th:href="@{/users/export/csv}">Export to CSV</a>
+			&nbsp; |&nbsp;
+			<a th:href="@{/users/export/excel}">Export to Excel</a>
 		</div>
 		
 		<div th:if="${message != null}" class="alert alert-success text-center">
@@ -120,9 +122,7 @@
 			<span>Showing users # [[${startCount}]] to [[${endCount}]] of [[${totalItems}]]</span>
 		</div>
 		
-		<div class="text-center m-1">
-			<span>No users found</span>
-		</div>
+		
 		
 		<div th:if="${totalItems > 0}">
 			<nav>
@@ -138,7 +138,9 @@
 		</div>
 		
 		
-		
+		<div class="text-center m-1">
+			<span>No users found</span>
+		</div>
 		<div class="modal fade text-center" id="confirmModal">
 			<div class="modal-dialog">
 				<div class="modal-content">
