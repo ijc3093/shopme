@@ -8,8 +8,8 @@
   <description>Root project</description>
   
   <modules>
-  	<module>ShopmeCommon</module>
-  	<module>ShopmeWebParent</module>
+  	<module>EcommerceCommon</module>
+  	<module>EcommerceWebParent</module>
   </modules>
   
 </project>
